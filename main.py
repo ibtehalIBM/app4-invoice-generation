@@ -1,6 +1,7 @@
 from fpdf import FPDF
 import glob
 import pandas as pd
+from pathlib import Path
 
 filepaths = glob.glob('Excel_Files/*.xlsx')
 
@@ -8,7 +9,15 @@ for file_path in filepaths:
     print(file_path)
     df = pd.read_excel(file_path, sheet_name='Sheet 1')
     print(df)
-    # pdf = FPDF(orientation='p',unit='mm',format='A4')
+    pdf = FPDF(orientation='p',unit='mm',format='A4')
+    pdf.add_page()
+    pdf.set_font(family='Times', style='b', size=24)
+    file_name = Path(file_path).stem
+    invoice_name = file_name.split('-')[0]
+    pdf.cell(w=0, h=12, txt=f'invoice no. {invoice_name}', align='L', ln=1)
+    pdf.output(f'PDFS/{invoice_name}.pdf')
+    # print(invoice_name)
+
 
 # pdf.set_auto_page_break(auto=False,margin=0)
 #
