@@ -31,8 +31,10 @@ for file_path in filepaths:
     pdf.cell(w=70, h=8, txt=columns[1], align='L', border=1)
     pdf.cell(w=40, h=8, txt=columns[2], align='L', border=1)
     pdf.cell(w=30, h=8, txt=columns[3], align='L', border=1)
-    pdf.cell(w=20, h=8, txt=columns[4], align='L', border=1, ln=1)
+    pdf.cell(w=22, h=8, txt=columns[4], align='L', border=1, ln=1)
 
+
+    total_price = 0
     for index,row in df.iterrows():
         pdf.set_font(family='Times', size=10)
         pdf.set_text_color(80,80,80)
@@ -40,8 +42,22 @@ for file_path in filepaths:
         pdf.cell(w=70, h=8, txt=str(row['product_name']), align='L',border=1)
         pdf.cell(w=40, h=8, txt=str(row['amount_purchased']), align='L',border=1)
         pdf.cell(w=30, h=8, txt=str(row['price_per_unit']), align='L',border=1)
-        pdf.cell(w=20, h=8, txt=str(row['total_price']), align='L',border=1,ln=1)
+        pdf.cell(w=22, h=8, txt=str(row['total_price']), align='L',border=1,ln=1)
+        # total_price += row['total_price']
 
+    total_price = df['total_price'].sum()
+    pdf.cell(w=30, h=8, txt='', align='L', border=1)
+    pdf.cell(w=70, h=8, txt='', align='L', border=1)
+    pdf.cell(w=40, h=8, txt='', align='L', border=1)
+    pdf.cell(w=30, h=8, txt='', align='L', border=1)
+    pdf.cell(w=22, h=8, txt=str(total_price), align='L', border=1, ln=1)
+
+    pdf.set_font(family='Times', style = 'B',size=14)
+    pdf.set_text_color(50, 50, 50)
+    pdf.cell(w=30, h=8, txt=f'The total due amount is {total_price}', align='L',ln=1)
+
+    pdf.cell(w=35, h=8, txt=f'How to Python', align='L')
+    pdf.image('pythonhow.png',w=10)
     pdf.output(f'PDFS/{file_name}.pdf')
     # print(invoice_name)
 
