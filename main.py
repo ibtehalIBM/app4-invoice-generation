@@ -34,6 +34,7 @@ for file_path in filepaths:
     pdf.cell(w=22, h=8, txt=columns[4], align='L', border=1, ln=1)
 
 
+
     total_price = 0
     for index,row in df.iterrows():
         pdf.set_font(family='Times', size=10)
